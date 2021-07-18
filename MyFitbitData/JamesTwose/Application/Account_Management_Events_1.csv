@@ -1,0 +1,12 @@
+timestamp,event_name,email,location,ip,outcome,reason
+Sat Jun 26 09:44:40 UTC 2021,Update profile data,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,
+Fri Jun 18 06:13:47 UTC 2021,Update profile data,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,
+Wed May 26 08:21:05 UTC 2021,Update profile data,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",84.241.196.3,SUCCESS,
+Tue Mar 16 20:28:57 UTC 2021,Link Account With Google,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,
+Tue Mar 16 20:28:57 UTC 2021,Link Account With Google,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,
+Sat Mar 13 09:07:13 UTC 2021,Update profile data,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",84.241.201.151,SUCCESS,
+Wed Jan 27 15:48:47 UTC 2021,Link Account With Google,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,FAIL,INVALID_PASSWORD
+Sun Jan 03 18:09:10 UTC 2021,verifyEmail,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,
+Sun Jan 03 18:09:06 UTC 2021,verifyEmail,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,
+Sun Jan 03 18:08:51 UTC 2021,send,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,
+Thu Dec 31 10:19:46 UTC 2020,Signup,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,

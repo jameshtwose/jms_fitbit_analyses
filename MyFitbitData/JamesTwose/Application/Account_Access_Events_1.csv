@@ -1,0 +1,6 @@
+timestamp,event_name,email,location,ip,outcome,reason,application,device_info
+Sun Jul 18 15:32:02 UTC 2021,Google Login,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,,Fitbit Accounts,"os_name: Mac OS,os_version: 10.15.7,browser_name: Safari,browser_version: 14.1.1,device_name: Mac OS"
+Fri Jul 16 21:25:05 UTC 2021,Google Login,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,,Fitbit Accounts,"os_name: Windows,os_version: 10,browser_name: Chrome,browser_version: 91.0.4472.124,device_name: Windows"
+Thu Jul 15 12:54:26 UTC 2021,Google Login,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,,Fitbit Accounts,"os_name: Mac OS,os_version: 10.15.7,browser_name: Safari,browser_version: 14.1.1,device_name: Mac OS"
+Tue Jul 06 20:59:35 UTC 2021,Google Login,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,,Fitbit Accounts,"os_name: Mac OS,os_version: 10.15.7,browser_name: Safari,browser_version: 14.1.1,device_name: Mac OS"
+Sat May 22 11:45:29 UTC 2021,Google Login,james.twose2711@gmail.com,"Amsterdam, NH, Netherlands",94.157.205.19,SUCCESS,,Fitbit Accounts,"os_name: Mac OS,os_version: 10.15.6,browser_name: Safari,browser_version: 14.0.3,device_name: Mac OS"

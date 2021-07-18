@@ -1,0 +1,3 @@
+entry_id,log_time,log_type,value,meta,entry_category,zone_offset
+97fa9d00-d2a6-11eb-85a1-e350d63ae5f9,2021-06-21T17:37:27,MOOD,4,{platform=mobile, source=Stress},MOOD,+02:00
+50834df0-d1cf-11eb-8fa1-51a4593e4371,2021-06-20T15:56:24,MOOD,2,{platform=mobile, source=Stress Onboarding},MOOD,+02:00
