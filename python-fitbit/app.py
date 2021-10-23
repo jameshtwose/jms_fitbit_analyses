@@ -15,6 +15,22 @@ import plotly.express as px
 import dash_core_components as dcc
 import dash_html_components as html
 
+import requests
+
+cache = dict()
+
+def get_article_from_server(url):
+    print("Fetching article from server...")
+    response = requests.get(url)
+    return response.text
+
+def get_article(url):
+    print("Getting article...")
+    if url not in cache:
+        cache[url] = get_article_from_server(url)
+
+    return cache[url]
+
 # Load your credentials
 load_dotenv(find_dotenv())
 
@@ -58,7 +74,7 @@ activity_choice_list = ["heart",
                         ]
 
 # activity_choice_list = ["calories", "heart", "steps", "distance"]
-date_choice_list = pd.date_range(start='1/1/2021', end=str(datetime.datetime.now())).astype(str).tolist()[:-1]
+date_choice_list = pd.date_range(start='1/1/2021', end=str(datetime.datetime.now())).astype(str).tolist()[:-2]
 
 app.layout = html.Div([
     html.H1(id='H1', children='The daily fitbit data of James Twose', style={'textAlign': 'center', 'marginTop': 40, 'marginBottom': 40}),
@@ -139,7 +155,7 @@ def graph_update(activity_choice, date_choice):
 def heatmap_update(activity_choice):
     monthDiffDate = datetime.datetime.now().date() - datetime.timedelta(30)
     date_tmp_list = pd.date_range(start=str(monthDiffDate),
-                                     end=str(datetime.datetime.now())).astype(str).tolist()[:-1]
+                                     end=str(datetime.datetime.now())).astype(str).tolist()[:-2]
 
     dfs_list = list()
     day_number = 1
