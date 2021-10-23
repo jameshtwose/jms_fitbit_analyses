@@ -1,4 +1,5 @@
 # This is a python file you need to have in the same directory as your code so you can import it
+import glob
 import gather_keys_oauth2 as Oauth2
 import fitbit
 import pandas as pd
@@ -58,7 +59,7 @@ activity_choice_list = ["heart",
                         ]
 
 # activity_choice_list = ["calories", "heart", "steps", "distance"]
-date_choice_list = pd.date_range(start='1/1/2021', end=str(datetime.datetime.now())).astype(str).tolist()[:-1]
+date_choice_list = pd.date_range(start='1/1/2021', end=str(datetime.datetime.now())).astype(str).tolist()[:-2]
 
 app.layout = html.Div([
     html.H1(id='H1', children='The daily fitbit data of James Twose', style={'textAlign': 'center', 'marginTop': 40, 'marginBottom': 40}),
@@ -75,7 +76,8 @@ app.layout = html.Div([
 
     # html.Div(id='display-value')
     dcc.Graph(id='line_plot'),
-    dcc.Graph(id="heatmap_plot"),
+    dcc.Graph(id="heatmap_plot",
+              style={"height": "1000px"}),
     html.Div(html.A(children="Created by James Twose",
                     href="https://services.jms.rocks",
                     style={'color': "#743de0"}),
@@ -111,7 +113,7 @@ def graph_update(activity_choice, date_choice):
                                                    detail_level=chosen_detail_level)
 
     df = pd.DataFrame(oneDayData[f"activities-{activity_choice}-intraday"]["dataset"])
-    df = df.assign(time=lambda x: pd.to_datetime(str(f"{oneDate} ") + df["time"]))
+    df = df.assign(time=lambda x: pd.to_datetime(str(f"{oneDate} ") + x["time"]))
 
     fig = px.line(
         data_frame=df,
@@ -137,30 +139,47 @@ def graph_update(activity_choice, date_choice):
                ]
               )
 def heatmap_update(activity_choice):
-    monthDiffDate = datetime.datetime.now().date() - datetime.timedelta(30)
+    monthDiffDate = datetime.datetime.now().date() - datetime.timedelta(32)
     date_tmp_list = pd.date_range(start=str(monthDiffDate),
-                                     end=str(datetime.datetime.now())).astype(str).tolist()[:-1]
+                                     end=str(datetime.datetime.now())).astype(str).tolist()[:-2]
 
-    dfs_list = list()
-    day_number = 1
-    for oneDate in date_tmp_list:
-        oneDayData = auth2_client.intraday_time_series('activities/heart', oneDate, detail_level='1min')
-        df = pd.DataFrame(oneDayData["activities-heart-intraday"]["dataset"])
-        df = (df
-              .assign(time=lambda x: pd.to_datetime(str(f"{oneDate} ") + df["time"]))
-              .rename(columns={"value": f"day_number_{day_number}_value"})
-              .assign(hour=lambda d: d["time"].dt.hour)
-              .assign(minute=lambda d: d["time"].dt.minute)
-              .drop("time", axis=1)
-              .set_index(["hour", "minute"])
-              )
-        dfs_list.append(df)
-        day_number += 1
+    heatmap_oneDate = str(datetime.datetime.now().date() - datetime.timedelta(2))
+    csv_list = glob.glob("data/*")
 
-    tmp_df = pd.concat(dfs_list, axis=1)
-    tmp_df.index = [str(x).replace(", ", "-").replace("(", "").replace(")", "") for x in tmp_df.index.values]
+    if len([x for x in csv_list if heatmap_oneDate in x]) > 0:
+        tmp_df = pd.read_csv([x for x in csv_list if heatmap_oneDate in x][0], index_col=0)
+    else:
+        dfs_list = list()
+        day_number = 1
+        for oneDate in date_tmp_list:
+            oneDayData = auth2_client.intraday_time_series('activities/heart', oneDate, detail_level='1min')
+            df = pd.DataFrame(oneDayData["activities-heart-intraday"]["dataset"])
+            df = (df
+                  .assign(time=lambda x: pd.to_datetime(str(f"{oneDate} ") + x["time"]))
+                  .rename(columns={"value": f"day_number_{day_number}_value"})
+                  .assign(hour=lambda d: d["time"].dt.hour)
+                  .assign(minute=lambda d: d["time"].dt.minute)
+                  .drop("time", axis=1)
+                  .set_index(["hour", "minute"])
+                  )
+            dfs_list.append(df)
+            day_number += 1
 
-    fig = px.imshow(tmp_df.T)
+        tmp_df = pd.concat(dfs_list, axis=1)
+        tmp_df.index = [str(x).replace(", ", "-").replace("(", "").replace(")", "") for x in tmp_df.index.values]
+
+    tmp_df=tmp_df.set_index(tmp_df.index.str.split("-", expand=True))
+
+    fig = px.imshow(tmp_df.T, aspect="equal")
+
+    fig.update_layout(title=f'Heart Rate Data {str(monthDiffDate)} - {heatmap_oneDate}',
+                      xaxis_title='Time (Minutes, Hours)',
+                      yaxis_title='Day Number',
+                      paper_bgcolor='rgb(34, 34, 34)',
+                      plot_bgcolor='rgb(34, 34, 34)',
+                      font=dict(color="#FFFFFF")
+                      )
+
     return fig
 
 if __name__ == '__main__':
